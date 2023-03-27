@@ -1,0 +1,5 @@
+simpletransformers
+beautifulsoup4==4.11.2
+torch
+Flask==2.1.0
+scipy
