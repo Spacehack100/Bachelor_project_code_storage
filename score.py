@@ -5,14 +5,16 @@ import re
 import json
 import numpy
 import time
+import os
 
 
 def init():
     global model
-    model = ClassificationModel("bert","model",use_cuda=False)
+    model_path = os.path.join(os.getenv("AZUREML_MODEL_DIR"), "Batch 32 epoch 4")
+    model = ClassificationModel("bert",model_path,use_cuda=False)
 
 def run(X):
-    X = json.loads(X)
+    #X = json.loads(X)
     timePreProcessBefore = time.perf_counter()
     X = preprocess(X)
     timePreProcessAfter = time.perf_counter()

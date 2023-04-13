@@ -1,0 +1,11 @@
+docker pull 76c09583e8204a59a4fccbd6a012f457.azurecr.io/azureml/azureml_78cdbc3d2f2b425a398edcc2a2468bc7:latest
+
+dependencies:
+  - python=3.8
+  - pip:
+      - simpletransformers
+      - azureml-inference-server-http
+  - beautifulsoup4
+  - pytorch
+  - scipy
+name: subject_classier_env
