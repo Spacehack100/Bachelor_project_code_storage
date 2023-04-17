@@ -9,3 +9,6 @@ dependencies:
   - pytorch
   - scipy
 name: subject_classier_env
+
+
+registry required name: 76c09583e8204a59a4fccbd6a012f457
