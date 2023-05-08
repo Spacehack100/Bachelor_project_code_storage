@@ -1,4 +1,6 @@
-docker pull 76c09583e8204a59a4fccbd6a012f457.azurecr.io/azureml/azureml_78cdbc3d2f2b425a398edcc2a2468bc7:latest
+docker pull mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04
+
+naam: email_classifier_full_env
 
 dependencies:
   - python=3.8
@@ -8,7 +10,7 @@ dependencies:
   - beautifulsoup4
   - pytorch
   - scipy
-name: subject_classier_env
+name: email_classifier_full_env
 
 
 registry required name: 76c09583e8204a59a4fccbd6a012f457
