@@ -1,0 +1,16 @@
+docker pull mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04
+
+naam: email_classifier_full_env
+
+dependencies:
+  - python=3.8
+  - pip:
+      - simpletransformers
+      - azureml-inference-server-http
+  - beautifulsoup4
+  - pytorch
+  - scipy
+name: email_classifier_full_env
+
+
+registry required name: 76c09583e8204a59a4fccbd6a012f457
