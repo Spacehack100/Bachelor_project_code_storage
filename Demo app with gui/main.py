@@ -1,13 +1,17 @@
 import requests
+import pickle
+import os
 
 from tkinter import *
 from tkinter import ttk
+
+filename = 'Demo app with gui\data.pk'
 
 def RetrieveResults(*args):
     
     print('function started')
     if(text.get() != '' and url.get() != ''):
-        if(authenticationToken != ''):
+        if(authenticationToken.get() != ''):
             result = requests.post(url.get(), data=text.get(), auth=authenticationToken.get())
         else:
             result = requests.post(url.get(), data=text.get())
@@ -31,6 +35,22 @@ def RetrieveResults(*args):
     else:
         print('No text or URL given')
         error.set('Error: Geen tekst of URL gegeven!')
+
+def Save(*args):
+    try:
+        dataList = [url.get(),authenticationToken.get()]
+        with open(filename, 'wb') as savePointer:
+            pickle.dump(dataList,savePointer)
+    except:
+        print('could not save data!')
+    root.destroy()
+
+def Load(*args):
+    if(os.path.isfile(filename)):
+        with open(filename, 'rb') as loadPointer:
+            dataList = pickle.load(loadPointer)
+            url.set(dataList[0])
+            authenticationToken.set(dataList[1])
 
 # url = 'http://localhost:80/predictBody'
 # authenticationToken = ''
@@ -103,4 +123,7 @@ SentimentTimeOutput.grid(column=3,row=2)
 errorOutput.grid(column=0,row=2,columnspan=2)
 
 root.resizable(False, False)
+root.protocol('WM_DELETE_WINDOW', Save)
+
+Load()
 root.mainloop()
