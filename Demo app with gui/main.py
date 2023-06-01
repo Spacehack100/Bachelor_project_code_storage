@@ -6,6 +6,10 @@ from tkinter import *
 from tkinter import ttk
 
 filename = 'Demo app with gui\data.pk'
+tableWidth = 14
+tableAnchor = 'center'
+tableRelief = 'solid'
+tableBorderWidth = 2
 
 def RetrieveResults(*args):
     
@@ -52,8 +56,6 @@ def Load(*args):
             url.set(dataList[0])
             authenticationToken.set(dataList[1])
 
-# url = 'http://localhost:80/predictBody'
-# authenticationToken = ''
 subjectClasses = ['andere','factuur','herhaling']
 SentimentClasses = ['negatief','neutraal','positief']
 
@@ -85,45 +87,50 @@ inputField = ttk.Entry(inputFrame, textvariable=text)
 retrieveResultsButton = ttk.Button(inputFrame,text='classificeer',command=RetrieveResults)
 
 PreProcessTimeOutput = ttk.Label(resultFrame, textvariable=resultPreProcessTime)
-subjectClassOutput = ttk.Label(resultTableFrame, textvariable=resultSubjectClass, borderwidth=2, relief='solid', width=13,anchor='center')
-subjectConfidenceOutput = ttk.Label(resultTableFrame, textvariable=resultSubjectConfidence, borderwidth=2, relief='solid', width=13,anchor='center')
-subjectTimeOutput = ttk.Label(resultTableFrame, textvariable=resultSubjectTime, borderwidth=2, relief='solid', width=13,anchor='center')
-SentimentClassOutput = ttk.Label(resultTableFrame, textvariable=resultSentimentClass, borderwidth=2, relief='solid', width=13,anchor='center')
-SentimentConfidenceOutput = ttk.Label(resultTableFrame, textvariable=resultSentimentConfidence, borderwidth=2, relief='solid', width=13,anchor='center')
-SentimentTimeOutput = ttk.Label(resultTableFrame, textvariable=resultSentimentTime, borderwidth=2, relief='solid', width=13,anchor='center')
+subjectClassOutput = ttk.Label(resultTableFrame, textvariable=resultSubjectClass, borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor)
+subjectConfidenceOutput = ttk.Label(resultTableFrame, textvariable=resultSubjectConfidence, borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor)
+subjectTimeOutput = ttk.Label(resultTableFrame, textvariable=resultSubjectTime, borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor)
+SentimentClassOutput = ttk.Label(resultTableFrame, textvariable=resultSentimentClass, borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor)
+SentimentConfidenceOutput = ttk.Label(resultTableFrame, textvariable=resultSentimentConfidence, borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor)
+SentimentTimeOutput = ttk.Label(resultTableFrame, textvariable=resultSentimentTime, borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor)
 errorOutput = ttk.Label(resultFrame, textvariable=error)
 
 mainFrame.grid(column=0,row=0)
-inputFrame.grid(column=0,row=0)
+inputFrame.grid(column=0,row=0, sticky='we')
+inputFrame.grid_columnconfigure(0, weight=1)
+inputFrame.grid_columnconfigure(1, weight=1)
 resultFrame.grid(column=0,row=1)
 resultTableFrame.grid(column=0,row=1)
 
-urlLabel.grid(column=0,row=0)
-urlEntry.grid(column=1,row=0)
-authenticationLabel.grid(column=0,row=1)
-authenticationEntry.grid(column=1,row=1)
-inputLabel.grid(column=0,row=2)
-inputField.grid(column=1,row=2)
+urlLabel.grid(column=0,row=0, sticky='e')
+urlEntry.grid(column=1,row=0, sticky='we')
+authenticationLabel.grid(column=0,row=1, sticky='e')
+authenticationEntry.grid(column=1,row=1, sticky='we')
+inputLabel.grid(column=0,row=2, sticky='e')
+inputField.grid(column=1,row=2, sticky='we')
 retrieveResultsButton.grid(column=0,row=3,columnspan=2)
 
 
 ttk.Label(resultFrame, text='Tijd Data voorbereiden: ').grid(column=0,row=0)
 PreProcessTimeOutput.grid(column=1,row=0)
-ttk.Label(resultTableFrame, text='Onderwerp', borderwidth=2, relief='solid', width=13,anchor='center').grid(column=0,row=1)
-ttk.Label(resultTableFrame, text='Sentiment', borderwidth=2, relief='solid', width=13,anchor='center').grid(column=0,row=2)
-ttk.Label(resultTableFrame, text='Categorie', borderwidth=2, relief='solid', width=13,anchor='center').grid(column=1,row=0)
+ttk.Label(resultTableFrame, text='Onderwerp', borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor).grid(column=0,row=1)
+ttk.Label(resultTableFrame, text='Sentiment', borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor).grid(column=0,row=2)
+ttk.Label(resultTableFrame, text='Categorie', borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor).grid(column=1,row=0)
 subjectClassOutput.grid(column=1,row=1)
 SentimentClassOutput.grid(column=1,row=2)
-ttk.Label(resultTableFrame, text='Zekerheid (%)', borderwidth=2, relief='solid', width=13,anchor='center').grid(column=2,row=0)
+ttk.Label(resultTableFrame, text='Zekerheid (%)', borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor).grid(column=2,row=0)
 subjectConfidenceOutput.grid(column=2,row=1)
 SentimentConfidenceOutput.grid(column=2,row=2)
-ttk.Label(resultTableFrame, text='Tijd (s)', borderwidth=2, relief='solid', width=13,anchor='center').grid(column=3,row=0)
+ttk.Label(resultTableFrame, text='Tijd (s)', borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor).grid(column=3,row=0)
 subjectTimeOutput.grid(column=3,row=1)
 SentimentTimeOutput.grid(column=3,row=2)
 errorOutput.grid(column=0,row=2,columnspan=2)
 
 root.resizable(False, False)
 root.protocol('WM_DELETE_WINDOW', Save)
+#inputFrame.grid_propagate(False)
+#inputFrame.after(500, lambda: inputFrame.configure(width=resultFrame.winfo_width()))
 
 Load()
 root.mainloop()
+
