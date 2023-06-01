@@ -8,7 +8,7 @@ from tkinter import ttk
 def RetrieveResults(*args):
     
     print('function started')
-    if(text != '' and url != ''):
+    if(text.get() != '' and url.get() != ''):
         if(authenticationToken != ''):
             result = requests.post(url.get(), data=text.get(), auth=authenticationToken.get())
         else:
@@ -30,6 +30,9 @@ def RetrieveResults(*args):
             resultSentimentTime.set(result['prediction_sentiment_time'])
         else:
             error.set('Error: HTTP code ' + str(result.status_code))
+    else:
+        print('No text or URL given')
+        error.set('Geen text of URL gegeven!')
 
 # url = 'http://localhost:80/predictBody'
 # authenticationToken = ''
@@ -38,8 +41,8 @@ SentimentClasses = ['negatief','neutraal','positief']
 
 root = Tk()
 root.title("Demo classificeerder")
-inputFrame = ttk.Frame(root).grid(column=0,row=0)
-resultFrame = ttk.Frame(root).grid(column=0,row=1)
+inputFrame = ttk.Frame(root, width=200, height=100, borderwidth=2, relief='raised')
+resultFrame = ttk.Frame(root, width=200, height=100, borderwidth=2, relief='sunken')
 
 url = StringVar()
 authenticationToken = StringVar()
@@ -53,21 +56,41 @@ resultSentimentConfidence = StringVar()
 resultSentimentTime = StringVar()
 error = StringVar()     
 
-urlLabel = ttk.Label(inputFrame, text='URL:').grid(column=0,row=0)
-urlEntry = ttk.Entry(inputFrame, textvariable=url).grid(column=1,row=0)
-authenticationLabel = ttk.Label(inputFrame, text='Authenticatie token:').grid(column=0,row=1)
-authenticationEntry = ttk.Entry(inputFrame, textvariable=authenticationToken).grid(column=1,row=1)
-inputLabel = ttk.Label(inputFrame, text='Voeg e-mail tekst hier in:').grid(column=0,row=2)
-inputField = ttk.Entry(inputFrame, textvariable=text).grid(column=1,row=2)
-retrieveResultsButton = ttk.Button(inputFrame,text='classificeer',command=RetrieveResults).grid(column=0,row=3,columnspan=2)
+urlLabel = ttk.Label(inputFrame, text='URL:')
+urlEntry = ttk.Entry(inputFrame, textvariable=url)
+authenticationLabel = ttk.Label(inputFrame, text='Authenticatie token:')
+authenticationEntry = ttk.Entry(inputFrame, textvariable=authenticationToken)
+inputLabel = ttk.Label(inputFrame, text='Voeg e-mail tekst hier in:')
+inputField = ttk.Entry(inputFrame, textvariable=text)
+retrieveResultsButton = ttk.Button(inputFrame,text='classificeer',command=RetrieveResults)
 
-PreProcessTimeOutput = ttk.Label(resultFrame, textvariable=resultPreProcessTime).grid(column=0,row=0,columnspan=3)
-subjectClassOutput = ttk.Label(resultFrame, textvariable=resultSubjectClass).grid(column=0,row=1)
-subjectConfidenceOutput = ttk.Label(resultFrame, textvariable=resultSubjectConfidence).grid(column=1,row=1)
-subjectTimeOutput = ttk.Label(resultFrame, textvariable=resultSubjectTime).grid(column=2,row=1)
-SentimentClassOutput = ttk.Label(resultFrame, textvariable=resultSentimentClass).grid(column=0,row=2)
-SentimentConfidenceOutput = ttk.Label(resultFrame, textvariable=resultSentimentConfidence).grid(column=1,row=1)
-SentimentTimeOutput = ttk.Label(resultFrame, textvariable=resultSentimentTime).grid(column=2,row=2)
-errorOutput = ttk.Label(resultFrame, textvariable=error).grid(column=0,row=3,columnspan=3)
+PreProcessTimeOutput = ttk.Label(resultFrame, textvariable=resultPreProcessTime)
+subjectClassOutput = ttk.Label(resultFrame, textvariable=resultSubjectClass)
+subjectConfidenceOutput = ttk.Label(resultFrame, textvariable=resultSubjectConfidence)
+subjectTimeOutput = ttk.Label(resultFrame, textvariable=resultSubjectTime)
+SentimentClassOutput = ttk.Label(resultFrame, textvariable=resultSentimentClass)
+SentimentConfidenceOutput = ttk.Label(resultFrame, textvariable=resultSentimentConfidence)
+SentimentTimeOutput = ttk.Label(resultFrame, textvariable=resultSentimentTime)
+errorOutput = ttk.Label(resultFrame, textvariable=error)
+
+inputFrame.grid(column=0,row=0)
+resultFrame.grid(column=0,row=1)
+
+urlLabel.grid(column=0,row=0)
+urlEntry.grid(column=1,row=0)
+authenticationLabel.grid(column=0,row=1)
+authenticationEntry.grid(column=1,row=1)
+inputLabel.grid(column=0,row=2)
+inputField.grid(column=1,row=2)
+retrieveResultsButton.grid(column=0,row=3,columnspan=2)
+
+PreProcessTimeOutput.grid(column=0,row=0,columnspan=3)
+subjectClassOutput.grid(column=0,row=1)
+subjectConfidenceOutput.grid(column=1,row=1)
+subjectTimeOutput.grid(column=2,row=1)
+SentimentClassOutput.grid(column=0,row=2)
+SentimentConfidenceOutput.grid(column=1,row=1)
+SentimentTimeOutput.grid(column=2,row=2)
+errorOutput.grid(column=0,row=3,columnspan=3)
 
 root.mainloop()
