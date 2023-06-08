@@ -28,8 +28,9 @@ def RetrieveResults(*args):
 
         if(result.status_code == 200):
             try:
-                result = result.json()
-                if(type(result == 'str')):
+                if(type(result) != type.__dict__):
+                    result = result.json()
+                if(type(result) == type.__str__):
                     result = json.loads(result)
             except:
                 print('json error: ' + result)
@@ -150,3 +151,7 @@ root.bind('<Return>', RetrieveResults)
 Load()
 root.mainloop()
 
+# url local: http://localhost:8000/predictBody
+# url Azure Docker: http://emailclassificationwithsentiment.bbg9h8bvfqbaf8ht.westeurope.azurecontainer.io/predictBody
+# url Azure ML: https://emailclassifiertest-full-v1.westeurope.inference.ml.azure.com/score
+# authentication token AML: 5UVRpJNhYlVd2h2XbW0If7pOKKSSJ9yx
