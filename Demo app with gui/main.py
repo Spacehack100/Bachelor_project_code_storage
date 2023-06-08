@@ -16,10 +16,15 @@ def RetrieveResults(*args):
     
     print('function started')
     if(text.get() != '' and url.get() != ''):
-        if(authenticationToken.get() != ''):
-            result = requests.post(url.get(), data=text.get(), headers = {'Authorization':('Bearer '+ authenticationToken.get())})
-        else:
-            result = requests.post(url.get(), data=text.get())
+        try:
+            if(authenticationToken.get() != ''):
+                result = requests.post(url.get(), data=text.get(), headers = {'Authorization':('Bearer '+ authenticationToken.get())})
+            else:
+                result = requests.post(url.get(), data=text.get())
+        except Exception as e:
+            print('Connection error: ' + str(e))
+            error.set('Connection error: ' + str(e))
+            return
 
         if(result.status_code == 200):
             try:
@@ -29,6 +34,7 @@ def RetrieveResults(*args):
             except:
                 print('json error: ' + result)
                 error.set('Json error: ' + result)
+                return
 
             preProcessTime = round(float(result['cleaning_time']),5)
             subjectConfidence = round(float(result['confidence_subject'])*100,2)
@@ -45,9 +51,11 @@ def RetrieveResults(*args):
             resultSentimentTime.set(sentimentTime)
         else:
             error.set('Error: HTTP code ' + str(result.status_code))
+            return
     else:
         print('No text or URL given')
         error.set('Error: Geen tekst of URL gegeven!')
+        return
 
 def Save(*args):
     try:
@@ -137,6 +145,7 @@ errorOutput.grid(column=0,row=2,columnspan=2)
 
 root.resizable(False, False)
 root.protocol('WM_DELETE_WINDOW', Save)
+root.bind('<Return>', RetrieveResults)
 
 Load()
 root.mainloop()
