@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  webserver:
+    build: ./inference_container
+    container_name: Bachelorproef_deployement_test
+    networks:
+     - E-mail_network
+    ports:
+      - 8080:80
+
+networks:
+  E-mail_network:
