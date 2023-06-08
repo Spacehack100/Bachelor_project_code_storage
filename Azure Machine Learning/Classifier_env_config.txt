@@ -13,4 +13,4 @@ dependencies:
 name: email_classifier_full_env
 
 
-registry required name: 76c09583e8204a59a4fccbd6a012f457
+registry required name (replace with own registry id AML created the first time): 76c09583e8204a59a4fccbd6a012f457

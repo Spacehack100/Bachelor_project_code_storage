@@ -1,6 +1,7 @@
 import requests
 import pickle
 import os
+import json
 
 from tkinter import *
 from tkinter import ttk
@@ -16,13 +17,15 @@ def RetrieveResults(*args):
     print('function started')
     if(text.get() != '' and url.get() != ''):
         if(authenticationToken.get() != ''):
-            result = requests.post(url.get(), data=text.get(), auth=authenticationToken.get())
+            result = requests.post(url.get(), data=text.get(), headers = {'Authorization':('Bearer '+ authenticationToken.get())})
         else:
             result = requests.post(url.get(), data=text.get())
 
         if(result.status_code == 200):
             try:
-                result = result.json()     
+                result = result.json()
+                if(type(result == 'str')):
+                    result = json.loads(result)
             except:
                 print('json error: ' + result)
                 error.set('Json error: ' + result)
@@ -68,7 +71,7 @@ SentimentClasses = ['negatief','neutraal','positief']
 root = Tk()
 root.title("Demo classificeerder")
 mainFrame = ttk.Frame(root, padding=5)
-inputFrame = ttk.Frame(mainFrame, borderwidth=2, relief='raised')
+inputFrame = ttk.Frame(mainFrame)
 resultFrame = ttk.Frame(mainFrame, borderwidth=2, relief='sunken')
 resultTableFrame = ttk.Frame(resultFrame)
 
@@ -134,8 +137,6 @@ errorOutput.grid(column=0,row=2,columnspan=2)
 
 root.resizable(False, False)
 root.protocol('WM_DELETE_WINDOW', Save)
-#inputFrame.grid_propagate(False)
-#inputFrame.after(500, lambda: inputFrame.configure(width=resultFrame.winfo_width()))
 
 Load()
 root.mainloop()
