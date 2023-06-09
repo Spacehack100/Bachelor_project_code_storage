@@ -31,7 +31,7 @@ def run(X):
     timePredSubject = timePredSubjectAfter - timePredSubjectBefore
     #response = 'Predicted class = ' + str(prediction[0]) + ' Cleaning time = ' + str(timePreProcess) + ' Prediction time = ' + str(timePred)
     if(prediction_subject[0] == 0):
-        response = json.dumps({"predicted_class" : str(prediction_subject[0]), "confidence" : probabilities_subject[prediction_subject[0]], 'cleaning_time' : timePreProcess, 'prediction_time' : timePredSubject})
+        response = json.dumps({"predicted_subject_class" : str(prediction_subject[0]), "confidence_subject" : probabilities_subject[prediction_subject[0]], 'cleaning_time' : timePreProcess, 'prediction_subject_time' : timePredSubject})
     else:
         timePredSentimentBefore = time.perf_counter()
         prediction_sentiment, raw_output = sentimentModel.predict(inputList)

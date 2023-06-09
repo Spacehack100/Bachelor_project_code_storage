@@ -28,28 +28,34 @@ def RetrieveResults(*args):
 
         if(result.status_code == 200):
             try:
-                if(type(result) != type.__dict__):
+                if(type(result) != dict):
                     result = result.json()
-                if(type(result) == type.__str__):
+                if(type(result) == str):
                     result = json.loads(result)
+                else:
+                    return
             except:
                 print('json error: ' + result)
                 error.set('Json error: ' + result)
                 return
 
             preProcessTime = round(float(result['cleaning_time']),5)
+            subjectClass = subjectClasses[int(result['predicted_subject_class'])]
             subjectConfidence = round(float(result['confidence_subject'])*100,2)
             subjectTime = round(float(result['prediction_subject_time']),3)
-            sentimentConfidence = round(float(result['confidence_sentiment'])*100,2)
-            sentimentTime = round(float(result['prediction_sentiment_time']),3)
 
             resultPreProcessTime.set(str(preProcessTime) + ' seconden')
-            resultSubjectClass.set(subjectClasses[int(result['predicted_subject_class'])])
+            resultSubjectClass.set(subjectClass)
             resultSubjectConfidence.set(subjectConfidence)
             resultSubjectTime.set(subjectTime)
-            resultSentimentClass.set(SentimentClasses[int(result['predicted_sentiment_class'])])
-            resultSentimentConfidence.set(sentimentConfidence)
-            resultSentimentTime.set(sentimentTime)
+            
+            if(subjectClass != 'andere'):
+                sentimentConfidence = round(float(result['confidence_sentiment'])*100,2)
+                sentimentTime = round(float(result['prediction_sentiment_time']),3)
+                resultSentimentClass.set(SentimentClasses[int(result['predicted_sentiment_class'])])
+                resultSentimentConfidence.set(sentimentConfidence)
+                resultSentimentTime.set(sentimentTime)
+
         else:
             error.set('Error: HTTP code ' + str(result.status_code))
             return
