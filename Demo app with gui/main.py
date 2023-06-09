@@ -32,7 +32,9 @@ def RetrieveResults(*args):
                     result = result.json()
                 if(type(result) == str):
                     result = json.loads(result)
-                else:
+                elif(type(result) != dict):
+                    print('extraction failed')
+                    error.set('Json error: conversion failed -> ' + result)
                     return
             except:
                 print('json error: ' + result)
