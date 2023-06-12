@@ -2,6 +2,8 @@ import requests
 import pickle
 import os
 import json
+import time
+import _thread
 
 from tkinter import *
 from tkinter import ttk
@@ -11,6 +13,10 @@ tableWidth = 14
 tableAnchor = 'center'
 tableRelief = 'solid'
 tableBorderWidth = 2
+
+def StartNewThread(*args):
+    _thread.start_new_thread(RetrieveResults,())
+    return
 
 def RetrieveResults(*args):
     
@@ -23,7 +29,7 @@ def RetrieveResults(*args):
                 result = requests.post(url.get(), data=text.get())
         except Exception as e:
             print('Connection error: ' + str(e))
-            error.set('Connection error: ' + str(e))
+            error.set('Connectie error: ' + str(e))
             return
 
         if(result.status_code == 200):
@@ -34,7 +40,7 @@ def RetrieveResults(*args):
                     result = json.loads(result)
                 elif(type(result) != dict):
                     print('extraction failed')
-                    error.set('Json error: conversion failed -> ' + result)
+                    error.set('Json error: omzetten gefaald -> ' + result)
                     return
             except:
                 print('json error: ' + result)
@@ -73,6 +79,8 @@ def Save(*args):
             pickle.dump(dataList,savePointer)
     except:
         print('could not save data!')
+        error.set('Error: Kon data niet opslagen')
+        time.sleep(3)
     root.destroy()
 
 def Load(*args):
@@ -110,7 +118,7 @@ authenticationLabel = ttk.Label(inputFrame, text='Authenticatie token:')
 authenticationEntry = ttk.Entry(inputFrame, textvariable=authenticationToken)
 inputLabel = ttk.Label(inputFrame, text='Voeg e-mail tekst hier in:')
 inputField = ttk.Entry(inputFrame, textvariable=text)
-retrieveResultsButton = ttk.Button(inputFrame,text='classificeer',command=RetrieveResults)
+retrieveResultsButton = ttk.Button(inputFrame,text='classificeer',command=StartNewThread)
 
 PreProcessTimeOutput = ttk.Label(resultFrame, textvariable=resultPreProcessTime)
 subjectClassOutput = ttk.Label(resultTableFrame, textvariable=resultSubjectClass, borderwidth=tableBorderWidth, relief=tableRelief, width=tableWidth,anchor=tableAnchor)
@@ -154,7 +162,7 @@ errorOutput.grid(column=0,row=2,columnspan=2)
 
 root.resizable(False, False)
 root.protocol('WM_DELETE_WINDOW', Save)
-root.bind('<Return>', RetrieveResults)
+root.bind('<Return>', StartNewThread)
 
 Load()
 root.mainloop()
