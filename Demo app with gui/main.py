@@ -63,6 +63,10 @@ def RetrieveResults(*args):
                 resultSentimentClass.set(SentimentClasses[int(result['predicted_sentiment_class'])])
                 resultSentimentConfidence.set(sentimentConfidence)
                 resultSentimentTime.set(sentimentTime)
+            else:
+                resultSentimentClass.set('')
+                resultSentimentConfidence.set('')
+                resultSentimentTime.set('')
 
         else:
             error.set('Error: HTTP code ' + str(result.status_code))
