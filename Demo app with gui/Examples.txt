@@ -1,0 +1,8 @@
+url local: http://localhost:8000/predictBody
+url Azure Docker: http://emailclassificationwithsentiment.bbg9h8bvfqbaf8ht.westeurope.azurecontainer.io/predictBody
+url Azure ML: https://emailclassifiertest-full-v1.westeurope.inference.ml.azure.com/score
+authentication token AML: 5UVRpJNhYlVd2h2XbW0If7pOKKSSJ9yx
+
+Voorbeeld 1: <p>Geachte meneer,\n\n u hebt nog   een openstaande factuur,\n\n mvg<p>
+Voorbeeld 2: 
+Voorbeeld 3: 
