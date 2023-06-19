@@ -4,5 +4,6 @@ url Azure ML: https://emailclassifiertest-full-v1.westeurope.inference.ml.azure.
 authentication token AML: 5UVRpJNhYlVd2h2XbW0If7pOKKSSJ9yx
 
 Voorbeeld 1: <p>Geachte meneer,\n\n u hebt nog   een openstaande factuur,\n\n mvg<p>
-Voorbeeld 2: 
-Voorbeeld 3: 
+Voorbeeld 2: Zie bijgevoegde rekening, \n\n mvg. <a>bedrijf.com<a>
+Voorbeeld 3: <iemand@ergens.com>Aanbieding voor een gratis massage! Antwoord snel voor de het verloopt!
+Voorbeeld 4: Hallo, mvg.
